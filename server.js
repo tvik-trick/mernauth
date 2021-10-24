@@ -45,26 +45,26 @@ app.post("/api/login", async (req, res) => {
       },
       "sec123"
     );
-    app.get("/api/quote", async (req, res) => {
-      const token = req.headers["x-access-token"];
-
-      try {
-        const decoded = jwt.verify(token, "sec123");
-        const id = decoded.id;
-        const user = await User.findOne({ _id: id });
-
-        return res.json({ status: "ok", quote: user.quote });
-      } catch (error) {
-        console.log(error);
-        res.json({ status: "error", error: "invalid token" });
-      }
-    });
-
     return res.json({ status: "ok", user: token });
   } else {
     return res.json({ status: "error", user: false });
   }
 });
+app.get("/api/quote", async (req, res) => {
+  const token = req.headers["x-access-token"];
+
+  try {
+    const decoded = jwt.verify(token, "sec123");
+    const id = decoded.id;
+    const user = await User.findOne({ _id: id });
+
+    return res.json({ status: "ok", quote: user.quote });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error", error: "invalid token" });
+  }
+});
+
 app.post("/api/quote", async (req, res) => {
   const token = req.headers["x-access-token"];
 
