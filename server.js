@@ -58,7 +58,7 @@ app.get("/api/quote", async (req, res) => {
     const id = decoded.id;
     const user = await User.findOne({ _id: id });
 
-    return res.json({ status: "ok", quote: user.quote });
+    return res.json({ status: "ok", name: user.name, quote: user.quote });
   } catch (error) {
     console.log(error);
     res.json({ status: "error", error: "invalid token" });
